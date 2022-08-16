@@ -1,0 +1,8 @@
+
+Description: https://enos.itcollege.ee/~japoia/algoritmid/ads_home2.html
+This is for the programming part of homework 2. Start a new attempt if needed. Do not forget to upload your xls-file separately.
+
+Kirjeldus: https://enos.itcollege.ee/~japoia/algoritmid/ads_home2.html
+Ärge unustage, et xls-formaadis tabel ja graafik tuleb eraldi üles laadida.
+
+
