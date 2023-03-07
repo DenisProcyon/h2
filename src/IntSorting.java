@@ -48,10 +48,26 @@ public class IntSorting {
 
          acopy = Arrays.copyOf(origArray, rightLimit);
          stime = System.nanoTime();
-         binaryInsertionSort(acopy);
+         updatedBinaryInsertionSort(acopy);
          ftime = System.nanoTime();
          diff = ftime - stime;
-         System.out.printf("%34s%11d%n", "Binary insertion sort: time (ms): ", diff / 1000000);
+         System.out.printf("%34s%11d%n", "New solution solution Binary insertion sort: time (ms): ", diff / 1000000);
+         checkOrder(acopy);
+
+         acopy = Arrays.copyOf(origArray, rightLimit);
+         stime = System.nanoTime();
+         binaryInsertionSort_b(acopy);
+         ftime = System.nanoTime();
+         diff = ftime - stime;
+         System.out.printf("%34s%11d%n", "My solution Binary insertion sort: time (ms): ", diff / 1000000);
+         checkOrder(acopy);
+
+         acopy = Arrays.copyOf(origArray, rightLimit);
+         stime = System.nanoTime();
+         binaryInsertionSort_c(acopy);
+         ftime = System.nanoTime();
+         diff = ftime - stime;
+         System.out.printf("%34s%11d%n", "Partner solution Binary insertion sort: time (ms): ", diff / 1000000);
          checkOrder(acopy);
 
          acopy = Arrays.copyOf(origArray, rightLimit);
@@ -107,7 +123,7 @@ public class IntSorting {
     * @param a
     *           array to be sorted
     */
-   public static void binaryInsertionSort(int[] a) {
+   public static void binaryInsertionSort_b(int[] a) {
       for (int i = 1; i < a.length; i++){ // we take second element (n+1) because we assume that n element is already sorted
          int current_element = a[i];
          int min = 0;
@@ -132,6 +148,60 @@ public class IntSorting {
          // I took this line from here https://www.geeksforgeeks.org/binary-insertion-sort/
 
          a[min] = current_element;
+      }
+   }
+
+   public static int binarySearchInsertIndex_c(int[] array, int key, int search_start, int search_stop){
+      while (search_start <= search_stop){
+         int middle_i = (search_stop + search_start) / 2;
+         int middle_value = array[middle_i];
+
+         if (middle_value == key){
+            return middle_i;
+         }
+         if (middle_value > key){
+            search_stop = middle_i - 1;
+         } else {
+            search_start = middle_i + 1;
+         }
+         middle_i = (search_stop + search_start) / 2;
+      }
+
+      return search_start;
+   }
+   /**
+    * Binary insertion sort.
+    *
+    * @param a
+    *           array to be sorted
+    */
+   public static void binaryInsertionSort_c(int[] a) {
+      if (a.length < 2)
+         return;
+      for (int i = 1; i < a.length; i++) {
+         int b = a[i];
+         int insertIndex = binarySearchInsertIndex_c(a, b, 0, i - 1);
+         if (insertIndex != i){
+            System.arraycopy(a, insertIndex, a, insertIndex + 1, i - insertIndex);
+            a[insertIndex] = b;
+         }
+
+      }
+   }
+
+   public static void updatedBinaryInsertionSort(int[] a) {
+      for (int i = 1; i < a.length; i++){ // we take second element (n+1) because we assume that n element is already sorted
+         int current_element = a[i];
+
+         int index_to_insert = Arrays.binarySearch(a, 0, i, current_element);
+         if (index_to_insert < 0){
+            index_to_insert = -(index_to_insert + 1);
+         }
+
+         System.arraycopy(a, index_to_insert, a, index_to_insert + 1, i - index_to_insert);
+         // I took this line from here https://www.geeksforgeeks.org/binary-insertion-sort/
+
+         a[index_to_insert] = current_element;
       }
    }
 
