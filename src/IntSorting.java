@@ -108,7 +108,31 @@ public class IntSorting {
     *           array to be sorted
     */
    public static void binaryInsertionSort(int[] a) {
-      // TODO!!! Your method here!
+      for (int i = 1; i < a.length; i++){ // we take second element (n+1) because we assume that n element is already sorted
+         int current_element = a[i];
+         int min = 0;
+         int max = i-1;
+         while (max >= min){
+            int mid = (max + min) / 2;
+            if (a[mid] >= current_element){
+               max = mid - 1;
+            }
+            else{
+               min = mid + 1;
+            }
+         }
+         //int index_to_insert = Arrays.binarySearch(a, 0, i, current_element);
+         //if (index_to_insert < 0){
+         //   index_to_insert = -(index_to_insert + 1);
+         //}
+         //for (int moving_element = i; moving_element > index_to_insert; moving_element--){
+         //   a[moving_element] = a[moving_element - 1];
+         //}
+         System.arraycopy(a, min, a, min + 1, i - min);
+         // I took this line from here https://www.geeksforgeeks.org/binary-insertion-sort/
+
+         a[min] = current_element;
+      }
    }
 
    /**
